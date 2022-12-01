@@ -104,19 +104,17 @@ NULL        NULL
 The following example returns rows where the `id` field isn't distinct from the integer value of 17.
 
 ```sql
-USE tempdb;
-GO
-DROP TABLE IF EXISTS #SampleTempTable;
-GO
-CREATE TABLE #SampleTempTable (id INT, message nvarchar(50));
-INSERT INTO #SampleTempTable VALUES (null, 'hello') ;
-INSERT INTO #SampleTempTable VALUES (10, null);
-INSERT INTO #SampleTempTable VALUES (17, 'abc');
-INSERT INTO #SampleTempTable VALUES (17, 'yes');
-INSERT INTO #SampleTempTable VALUES (null, null);
+
+DECLARE @SampleTempTable TABLE ([id] INT, [message] nvarchar(50));
+INSERT INTO @SampleTempTable 
+          SELECT null, 'hello'
+UNION ALL SELECT 10   , null
+UNION ALL SELECT 17   , 'abc'
+UNION ALL SELECT 17   , 'yes'
+UNION ALL SELECT NULL , null
 GO
 
-SELECT * FROM #SampleTempTable WHERE id IS NOT DISTINCT FROM 17;
+SELECT * FROM @SampleTempTable WHERE [id] IS NOT DISTINCT FROM 17;
 ```
 
 The results return only the rows where the `id` matched the value of 17.
