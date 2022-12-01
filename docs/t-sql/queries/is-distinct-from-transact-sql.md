@@ -107,11 +107,11 @@ The following example returns rows where the `id` field isn't distinct from the 
 
 DECLARE @SampleTempTable TABLE ([id] INT, [message] nvarchar(50));
 INSERT INTO @SampleTempTable 
-          SELECT null, 'hello'
-UNION ALL SELECT 10   , null
+          SELECT NULL , 'hello'
+UNION ALL SELECT 10   , NULL
 UNION ALL SELECT 17   , 'abc'
 UNION ALL SELECT 17   , 'yes'
-UNION ALL SELECT NULL , null
+UNION ALL SELECT NULL , NULL
 GO
 
 SELECT * FROM @SampleTempTable WHERE [id] IS NOT DISTINCT FROM 17;
